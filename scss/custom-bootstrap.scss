@@ -25,26 +25,26 @@ $body-bg: $light;
 $body-color: $dark;
 
 $theme-colors: (
-        'primary': $primary,
-        'secondary': $secondary,
-        'dark': $dark,
-        'light': $light,
-        'gray': $gray,
-        'white': $white,
-        'black': $black,
-        'lightprimary': $lightprimary,
-        'lightsecondary': $lightsecondary,
-        'lightsunflower': $lightsunflower,
-        'ligthbittersweet': $lightbittersweet,
-        'lightaqua': $lightaqua,
-        'lightmint': $lightmint,
-        'mint': $mint,
-        'muted': $muted,
-        'sunflower': $sunflower,
-        'glass': $glass,
-        'bittersweet': $bittersweet,
-        'lightglass': $lightglass,
-        'aqua': $aqua
+  "primary": $primary,
+  "secondary": $secondary,
+  "dark": $dark,
+  "light": $light,
+  "gray": $gray,
+  "white": $white,
+  "black": $black,
+  "lightprimary": $lightprimary,
+  "lightsecondary": $lightsecondary,
+  "lightsunflower": $lightsunflower,
+  "ligthbittersweet": $lightbittersweet,
+  "lightaqua": $lightaqua,
+  "lightmint": $lightmint,
+  "mint": $mint,
+  "muted": $muted,
+  "sunflower": $sunflower,
+  "glass": $glass,
+  "bittersweet": $bittersweet,
+  "lightglass": $lightglass,
+  "aqua": $aqua,
 );
 
 // Settings
@@ -62,7 +62,7 @@ $grid-gutter-width: 15px;
 $font-weight-base: 500;
 $font-weight-normal: 400;
 $lead-font-weight: normal;
-$font-family-base: 'Quicksand', sans-serif;
+$font-family-base: "Quicksand", sans-serif;
 
 // Headings
 

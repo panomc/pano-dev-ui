@@ -1,6 +1,6 @@
-@import 'custom-bootstrap';
+@import "custom-bootstrap";
 @import "node_modules/bootstrap/scss/bootstrap";
-@import 'fonts';
+@import "fonts";
 
 // Main Styles
 
@@ -9,27 +9,10 @@
   margin-left: 0;
 
   > .col,
-  > [class*='col-'] {
+  > [class*="col-"] {
     padding-right: 0;
     padding-left: 0;
   }
-}
-
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar:horizontal {
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  border-radius: 8px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba($color: $glass, $alpha: 0.1);
-  border-radius: 8px;
 }
 
 .border-lg {
