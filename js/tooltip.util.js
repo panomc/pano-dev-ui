@@ -1,32 +1,45 @@
-import jQuery from "jquery";
-import { afterRouteEnter } from "routve";
+// export default function tooltip(element, [place, value]) {
+//   deleteSubscribe();
+//   setTooltip(element, [place, value]);
+//
+//   return {
+//     update([place, value]) {
+//       deleteSubscribe();
+//       setTooltip(element, [place, value]);
+//     },
+//   };
+// }
+//
+// export function initTooltip() {
+//   isReady.set(true);
+// }
 
-afterRouteEnter((context, next) => {
-  jQuery('[data-toggle="tooltip"], .tooltip').tooltip("hide");
-  next();
-});
+// import { afterRouteEnter } from "routve";
+//
+// afterRouteEnter((context, next) => {
+//   jQuery('[data-toggle="tooltip"], .tooltip').tooltip("hide");
+//   next();
+// });
 
-function setTooltip(element, [place, value]) {
-  if (value !== jQuery(element).attr("data-original-title")) {
-    jQuery(element).attr("data-original-title", value).tooltip({
-      title: value,
-      placement: place,
-      trigger: "hover",
-      selector: true,
-    });
+import tippy from "tippy.js";
 
-    if (jQuery(jQuery(element).data("bs.tooltip").tip).hasClass("show")) {
-      jQuery(element).tooltip("show");
-    }
-  }
+function setTooltip(element, [value, options]) {
+  const instance = typeof element._tippy === "undefined" ? tippy(element) : element._tippy;
+
+  instance.setContent(value)
+  instance.setProps(options)
 }
 
-export default function tooltip(element, [place, value]) {
-  setTooltip(element, [place, value]);
+export default function tooltip(element, [value, options]) {
+  if (typeof options === "undefined") options = {};
+
+  setTooltip(element, [value, options]);
 
   return {
-    update([place, value]) {
-      setTooltip(element, [place, value]);
+    update([value, options]) {
+      if (typeof options === "undefined") options = {};
+
+      setTooltip(element, [value, options]);
     },
   };
 }
