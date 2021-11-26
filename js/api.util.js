@@ -60,7 +60,7 @@ export const ApiUtil = {
   },
 
   customRequest(data) {
-    return axios(data);
+    return axios({ ...config, ...data });
   },
 };
 
