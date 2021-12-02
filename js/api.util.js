@@ -1,66 +1,83 @@
-import axios from "axios";
+import { CSRF_HEADER } from "$lib/variables";
 
 export const NETWORK_ERROR = "NETWORK_ERROR";
 
-export const DEFAULT_CONFIG = {
-  headers: {
-    "Content-Type": "application/json",
-  },
-};
-
-axios.interceptors.response.use(
-  function (response) {
-    return response;
-  },
-  (error) => {
-    if (error.response) {
-      // The request was made and the server responded with a status code
-      // that falls out of the range of 2xx
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
-    } else if (error.request) {
-      // The request was made but no response was received
-      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-      // http.ClientRequest in node.js
-      console.log(error.request);
-    } else {
-      // Something happened in setting up the request that triggered an Error
-      console.log("Error", error.message);
-    }
-
-    console.log(error.config);
-  }
-);
-
-export const ApiUtil = {
-  init(baseURL) {
-    axios.defaults.baseURL = baseURL;
-
-    axios.defaults.withCredentials = true;
-
-    axios.defaults.headers.post["Content-Type"] =
-      "application/json;charset=utf-8";
+const ApiUtil = {
+  get({ path, request, CSRFToken }) {
+    return this.customRequest({ path, request, CSRFToken });
   },
 
-  get(resource, config = DEFAULT_CONFIG) {
-    return axios.get(resource, config);
+  post({ path, request, body, CSRFToken }) {
+    return this.customRequest({
+      path,
+      data: {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(body || {}),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+      request,
+      CSRFToken,
+    });
   },
 
-  post(resource, data, config = DEFAULT_CONFIG) {
-    return axios.post(resource, data, config);
+  put({ path, request, body, CSRFToken }) {
+    return this.customRequest({
+      path,
+      data: {
+        method: "PUT",
+        credentials: "include",
+        body: JSON.stringify(body || {}),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+      request,
+      CSRFToken,
+    });
   },
 
-  put(resource, data, config = DEFAULT_CONFIG) {
-    return axios.put(resource, data, config);
+  delete({ path, request, CSRFToken }) {
+    return this.customRequest({
+      path,
+      data: {
+        method: "DELETE",
+      },
+      request,
+      CSRFToken,
+    });
   },
 
-  delete(resource, config = DEFAULT_CONFIG) {
-    return axios.delete(resource, config);
-  },
+  customRequest({
+    path,
+    data = {},
+    request,
+    CSRFToken = request && request.session.CSRFToken,
+  }) {
+    const CSRFHeader = {};
 
-  customRequest(data) {
-    return axios({ ...config, ...data });
+    if (CSRFToken) CSRFHeader[CSRF_HEADER] = CSRFToken;
+
+    const input = {
+      ...data,
+      headers: CSRFToken ? { ...data.headers, ...CSRFHeader } : data.headers,
+    };
+
+    const fetchRequest = request
+      ? request.fetch(path, input)
+      : fetch(path, input);
+
+    return fetchRequest
+      .then((r) => r.text())
+      .then((json) => {
+        try {
+          return JSON.parse(json);
+        } catch (err) {
+          return json;
+        }
+      });
   },
 };
 
