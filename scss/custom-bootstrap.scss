@@ -81,16 +81,12 @@ $btn-padding-x: 1rem;
 $btn-padding-x-sm: 1rem;
 $btn-font-weight: $font-weight-base !important;
 $btn-box-shadow: 0 4px 0 $glass;
-$btn-active-box-shadow: none;
+$btn-active-box-shadow: 0;
 $btn-border-width: 2px;
-
-// Links
-
-$link-color: $primary;
-$link-hover-decoration: none;
 
 // Box Shadow
 
+$box-shadow-inset: 0;
 $box-shadow: 0 5px 0 $glass;
 $box-shadow-sm: 0 3px 0 $glass;
 $box-shadow-lg: 0 10px 0 $glass;
@@ -101,32 +97,38 @@ $modal-backdrop-opacity: 0.2;
 $modal-content-box-shadow-xs: 0 0 30px $glass;
 $modal-content-box-shadow-sm-up: 0 0 30px $glass;
 
+// Cards
+
+$card-border-width: 0;
+
 // Alerts
 
-$alert-color-level: 2;
+$alert-border-width: 0;
 
 // Forms
 
 $form-group-margin-bottom: 1.5rem;
 
+// Lines
+
+$link-decoration: none;
+
 // Inputs
 
-$input-box-shadow: none;
 $input-bg: $white;
 $input-font-weight: $font-weight-normal;
 
 // Dropdowns
 
+$dropdown-link-color: $primary;
+$dropdown-link-hover-color: $white;
 $dropdown-box-shadow: 0 5px 0 $glass;
-$dropdown-link-active-bg: $lightprimary;
-$dropdown-link-active-color: $primary;
+$dropdown-link-hover-bg: $primary;
 
 // Navbar
 
-$navbar-light-active-color: $primary;
-$navbar-light-disabled-color: $gray;
 $navbar-padding-y: 1rem;
-$navbar-padding-x: 1rem;
+$navbar-padding-x: 0;
 $navbar-nav-link-padding-x: 1rem;
 $navbar-dark-color: rgba($white, 0.9);
 
