@@ -1,9 +1,13 @@
 // Colors
 
+$min-contrast-ratio: 2;
+
 $primary: #1976d2;
 $secondary: #72c076;
+$danger: #ed5565;
 $dark: #434a54;
 $gray: #ccd1d9;
+$gray-200: #ccd1d9;
 $light: #f5f7fa;
 $white: #fff;
 $black: #000;
@@ -27,8 +31,10 @@ $body-color: $dark;
 $theme-colors: (
   "primary": $primary,
   "secondary": $secondary,
-  "dark": $dark,
+  "danger": $danger,
   "light": $light,
+  "dark": $dark,
+  "muted": $muted,
   "gray": $gray,
   "white": $white,
   "black": $black,
@@ -39,7 +45,6 @@ $theme-colors: (
   "lightaqua": $lightaqua,
   "lightmint": $lightmint,
   "mint": $mint,
-  "muted": $muted,
   "sunflower": $sunflower,
   "glass": $glass,
   "bittersweet": $bittersweet,
@@ -82,7 +87,6 @@ $btn-padding-x-sm: 1rem;
 $btn-font-weight: $font-weight-base !important;
 $btn-box-shadow: 0 4px 0 $glass;
 $btn-active-box-shadow: 0;
-$btn-border-width: 2px;
 
 // Box Shadow
 
@@ -120,10 +124,11 @@ $input-font-weight: $font-weight-normal;
 
 // Dropdowns
 
-$dropdown-link-color: $primary;
-$dropdown-link-hover-color: $white;
+$dropdown-link-color: $dark;
 $dropdown-box-shadow: 0 5px 0 $glass;
-$dropdown-link-hover-bg: $primary;
+$dropdown-link-hover-bg: $lightprimary;
+$dropdown-link-active-bg: $lightprimary;
+$dropdown-link-active-color: $black;
 
 // Navbar
 
@@ -134,7 +139,7 @@ $navbar-dark-color: rgba($white, 0.9);
 
 // Tables
 
-$table-color: $dark;
+$table-group-separator-color: $glass;
 
 // Navs
 
