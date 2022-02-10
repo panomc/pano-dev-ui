@@ -5,6 +5,7 @@ $min-contrast-ratio: 2;
 $primary: #1976d2;
 $secondary: #72c076;
 $danger: #ed5565;
+$warning: #f7ca18;
 $dark: #434a54;
 $gray: #ccd1d9;
 $gray-200: #ccd1d9;
@@ -32,6 +33,7 @@ $theme-colors: (
   "primary": $primary,
   "secondary": $secondary,
   "danger": $danger,
+  "warning": $warning,
   "light": $light,
   "dark": $dark,
   "muted": $muted,
@@ -66,6 +68,7 @@ $grid-gutter-width: 15px;
 // $lead-font-size: 1.15rem;
 $font-weight-base: 500;
 $font-weight-normal: 500;
+$font-weight-bold: 500;
 $lead-font-weight: normal;
 $font-family-base: "Quicksand", sans-serif;
 
@@ -94,7 +97,6 @@ $box-shadow-inset: 0;
 $box-shadow: 0 5px 0 $glass;
 $box-shadow-sm: 0 3px 0 $glass;
 $box-shadow-lg: 0 10px 0 $glass;
-
 // Modals
 
 $modal-backdrop-opacity: 0.2;
