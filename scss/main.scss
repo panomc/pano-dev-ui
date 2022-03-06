@@ -41,3 +41,15 @@
 .badge {
   color: $white;
 }
+
+// Editor
+
+.ProseMirror {
+  font-family: Arial, Helvetica, sans-serif;
+  display: block;
+  word-wrap: break-word !important;
+  height: 100%;
+  padding: 0;
+  outline: none;
+  border: none;
+}
