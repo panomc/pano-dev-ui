@@ -4,6 +4,12 @@
 
 // Pano UI Styles
 
+.card-logomark {
+  background: url("/assets/img/logo-blue.svg") bottom -16px right -16px, $card-bg;
+  background-size: 128px;
+  background-repeat: no-repeat;
+}
+
 // Editor
 
 .ProseMirror {
