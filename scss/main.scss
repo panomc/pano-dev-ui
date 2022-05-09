@@ -1,14 +1,13 @@
+$fa-font-path: "/webfonts";
+
 @import "custom-bootstrap";
 @import "node_modules/bootstrap/scss/bootstrap";
 @import "fonts";
+@import "node_modules/@fortawesome/fontawesome-free/scss/fontawesome";
+@import "node_modules/@fortawesome/fontawesome-free/scss/brands";
+@import "node_modules/@fortawesome/fontawesome-free/scss/solid";
 
 // Pano UI Styles
-
-.card-logomark {
-  background: url("/assets/img/logo-blue.svg") bottom -16px right -16px, $card-bg;
-  background-size: 128px;
-  background-repeat: no-repeat;
-}
 
 // Editor
 
