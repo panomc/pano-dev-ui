@@ -26,11 +26,13 @@ $lightsunflower: rgba($sunflower, 0.075);
 $lightbittersweet: rgba($bittersweet, 0.075);
 $lightaqua: rgba($aqua, 0.075);
 $lightmint: rgba($mint, 0.075);
+$transparent: rgba(white, .0);
 
 $body-bg: $light;
 $body-color: $dark;
 
 $theme-colors: (
+  "transparent": $transparent,
   "primary": $primary,
   "secondary": $secondary,
   "danger": $danger,
@@ -136,10 +138,16 @@ $dropdown-link-active-bg: $lightprimary;
 $dropdown-link-active-color: $black;
 
 // Navbar
-
 $navbar-nav-link-padding-x: 1rem;
-$navbar-dark-color: rgba($white, 0.9);
 $navbar-brand-font-size: 1.1rem;
+
+// Navbar Dark
+
+$navbar-dark-color: rgba($white, 0.9);
+$navbar-dark-toggler-border-color: $transparent;
+
+// Navbar Light
+$navbar-light-toggler-border-color: $transparent;
 
 // Tables
 
