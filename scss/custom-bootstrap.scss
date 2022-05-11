@@ -101,8 +101,10 @@ $box-shadow-inset: 0;
 $box-shadow: 0 5px 0 $glass;
 $box-shadow-sm: 0 3px 0 $glass;
 $box-shadow-lg: 0 10px 0 $glass;
+
 // Modals
 
+$modal-content-border-width: 0;
 $modal-backdrop-opacity: 0.2;
 $modal-content-box-shadow-xs: 0 0 30px $glass;
 $modal-content-box-shadow-sm-up: 0 0 30px $glass;
