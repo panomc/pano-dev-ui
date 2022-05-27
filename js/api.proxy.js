@@ -10,8 +10,8 @@ const returnError = () => {
 async function handle({
   request: { method, headers },
   request,
-  params: { path },
   locals: { jwt, CSRFToken },
+  url: {pathname, search}
 }) {
   let response;
 
@@ -24,22 +24,22 @@ async function handle({
   }
 
   if (method === "GET") {
-    response = await api.get(path, jwt).catch(returnError);
+    response = await api.get(pathname + search, jwt).catch(returnError);
   }
 
   if (method === "DELETE") {
-    response = await api.del(path, jwt).catch(returnError);
+    response = await api.del(pathname + search, jwt).catch(returnError);
   }
 
   if (method === "POST") {
     response = await api
-      .post(path, await request.text(), jwt)
+      .post(pathname + search, await request.text(), jwt)
       .catch(returnError);
   }
 
   if (method === "PUT") {
     response = await api
-      .put(path, await request.text(), jwt)
+      .put(pathname + search, await request.text(), jwt)
       .catch(returnError);
   }
 
