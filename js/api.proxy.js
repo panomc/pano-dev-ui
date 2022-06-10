@@ -11,15 +11,11 @@ async function handle({
   request: { method, headers },
   request,
   locals: { jwt, CSRFToken },
-  url: {pathname, search}
+  url: { pathname, search },
 }) {
   let response;
 
-  if (
-    headers.get(CSRF_HEADER) &&
-    CSRFToken &&
-    headers.get(CSRF_HEADER) !== CSRFToken
-  ) {
+  if (CSRFToken && headers.get(CSRF_HEADER) !== CSRFToken) {
     return returnError();
   }
 
