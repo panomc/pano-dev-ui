@@ -2,7 +2,7 @@
 
 $min-contrast-ratio: 2;
 
-$primary: #1976d2;
+$primary: #4560e5;
 $secondary: #72c076;
 $danger: #ed5565;
 $success: #a0d468;
@@ -58,6 +58,32 @@ $theme-colors: (
   "aqua": $aqua,
 );
 
+// Color shades
+
+$primaries: (
+  "primary-100": #c9d2ff,
+  "primary-200": #a4b3ff,
+  "primary-300": #7e94ff,
+  "primary-400": #5975ff,
+  "primary-500": $primary,
+  "primary-600": #314ac3,
+  "primary-700": #2136a1,
+  "primary-800": #14267f,
+  "primary-900": #0a185d,
+) !default;
+
+$secondaries: (
+  "primary-100": #c9d2ff,
+  "primary-200": #a4b3ff,
+  "primary-300": #7e94ff,
+  "primary-400": #5975ff,
+  "primary-500": $secondary,
+  "primary-600": #314ac3,
+  "primary-700": #2136a1,
+  "primary-800": #14267f,
+  "primary-900": #0a185d,
+) !default;
+
 // Settings
 
 $enable-shadows: true;
@@ -69,7 +95,6 @@ $grid-gutter-width: 15px;
 
 // Fonts
 
-// $lead-font-size: 1.15rem;
 $font-weight-base: 500;
 $font-weight-normal: 500;
 $font-weight-bold: 500;
@@ -112,6 +137,7 @@ $modal-content-box-shadow-sm-up: 0 0 30px $glass;
 // Cards
 
 $card-border-width: 0;
+$card-color: $black;
 $card-bg: $white;
 
 // Alerts
@@ -133,27 +159,37 @@ $input-font-weight: $font-weight-normal;
 
 // Dropdowns
 
-$dropdown-link-color: $dark;
-$dropdown-box-shadow: 0 5px 0 $glass;
+$dropdown-header-color: $black;
+$dropdown-link-color: $primary;
+$dropdown-link-active-color: $primary;
 $dropdown-link-hover-bg: $lightprimary;
 $dropdown-link-active-bg: $lightprimary;
-$dropdown-link-active-color: $black;
+$dropdown-item-padding-y: 0.4rem;
 
 // Navbar
+
 $navbar-nav-link-padding-x: 1rem;
-$navbar-brand-font-size: 1.1rem;
 
 // Navbar Dark
 
-$navbar-dark-color: rgba($white, 0.9);
+$navbar-dark-active-color: $sunflower;
+$navbar-dark-color: $white;
+
+// Navbar Dark
+
 $navbar-dark-toggler-border-color: $transparent;
 
 // Navbar Light
+$navbar-light-color: $dark;
+$navbar-light-hover-color: $black;
+$navbar-light-active-color: $black;
 $navbar-light-toggler-border-color: $transparent;
 
 // Tables
 
 $table-group-separator-color: $glass;
+$table-cell-padding-y: 0.6rem;
+$table-striped-bg-factor: 0.02;
 
 // Navs
 
@@ -168,7 +204,6 @@ $list-group-hover-bg: $lightprimary;
 $list-group-active-bg: $white;
 $list-group-active-color: $primary;
 $list-group-disabled-color: $gray;
-$list-group-border-radius: 0;
 $list-group-border-width: 0;
 
 // Paginations
@@ -178,7 +213,7 @@ $pagination-active-color: $primary;
 
 // Badges
 
-$badge-font-weight: 0.9rem;
+$badge-font-size: 1rem;
 $badge-padding-x: 1rem;
 $badge-padding-y: 0.5rem;
-$badge-pill-padding-x: 1rem;
+$badge-font-weight: $font-family-base;
