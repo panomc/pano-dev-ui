@@ -43,21 +43,21 @@ async function handle({
 }
 
 /** @type {import('@sveltejs/kit').RequestHandler} */
-export async function get(request) {
+export async function GET(request) {
   return handle(request);
 }
 
 /** @type {import('@sveltejs/kit').RequestHandler} */
-export async function del(request) {
+export async function DELETE(request) {
   return handle(request);
 }
 
 /** @type {import('@sveltejs/kit').RequestHandler} */
-export async function post(request) {
+export async function POST(request) {
   return handle(request);
 }
 
 /** @type {import('@sveltejs/kit').RequestHandler} */
-export async function put(request) {
+export async function PUT(request) {
   return handle(request);
 }
