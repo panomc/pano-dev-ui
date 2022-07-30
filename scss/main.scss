@@ -11,9 +11,7 @@ $fa-font-path: "/assets/webfonts";
 
 // Pano UI Styles
 
-$all-colors: map-merge-multiple(
-  $primaries
-);
+$all-colors: map-merge-multiple($primaries);
 
 $utilities: map-merge(
   $utilities,
@@ -33,7 +31,6 @@ $utilities: map-merge(
 );
 
 @import "bootstrap/scss/utilities/api";
-
 
 // Editor
 
