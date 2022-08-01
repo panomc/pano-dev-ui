@@ -20,22 +20,22 @@ async function handle({
   }
 
   if (method === "GET") {
-    response = await api.get(pathname + search, jwt).catch(returnError);
+    response = await api.GET(pathname + search, jwt).catch(returnError);
   }
 
   if (method === "DELETE") {
-    response = await api.del(pathname + search, jwt).catch(returnError);
+    response = await api.DELETE(pathname + search, jwt).catch(returnError);
   }
 
   if (method === "POST") {
     response = await api
-      .post(pathname + search, await request.text(), jwt)
+      .POST(pathname + search, await request.text(), jwt)
       .catch(returnError);
   }
 
   if (method === "PUT") {
     response = await api
-      .put(pathname + search, await request.text(), jwt)
+      .PUT(pathname + search, await request.text(), jwt)
       .catch(returnError);
   }
 
