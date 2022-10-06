@@ -1,7 +1,4 @@
 import { CSRF_HEADER } from "$lib/variables";
-import { browser } from "$app/environment";
-import { navigating } from "$app/stores";
-import { get } from "svelte/store";
 
 export const NETWORK_ERROR = "NETWORK_ERROR";
 
@@ -82,12 +79,6 @@ const ApiUtil = {
           return json;
         }
       })
-      .catch((er) => {
-        console.log("error happened")
-        console.log(er)
-
-        return er
-      });
   },
 };
 
