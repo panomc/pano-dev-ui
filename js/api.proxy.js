@@ -39,7 +39,7 @@ async function handle({
       .catch(returnError);
   }
 
-  return { body: response };
+  return new Response(JSON.stringify(response));
 }
 
 /** @type {import('@sveltejs/kit').RequestHandler} */
