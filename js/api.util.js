@@ -68,12 +68,10 @@ const ApiUtil = {
       headers: CSRFToken ? { ...data.headers, ...CSRFHeader } : data.headers,
     };
 
-    const url =
-      !browser && request
-        ? `http://127.0.0.1:${request.url.port}` + path
-        : path;
     const fetchRequest =
-      request && request.fetch ? request.fetch(url, input) : fetch(url, input);
+      request && request.fetch
+        ? request.fetch(path, input)
+        : fetch(path, input);
 
     return fetchRequest
       .then((r) => r.text())
