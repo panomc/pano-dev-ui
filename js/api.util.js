@@ -1,4 +1,7 @@
 import { CSRF_HEADER } from "$lib/variables";
+import { get } from "svelte/store";
+import { session } from "$lib/Store.js";
+import { browser } from "$app/environment";
 
 export const NETWORK_ERROR = "NETWORK_ERROR";
 
@@ -54,7 +57,7 @@ const ApiUtil = {
     path,
     data = {},
     request,
-    CSRFToken = request && request.locals.CSRFToken,
+    CSRFToken = get(session).CSRFToken,
   }) {
     const CSRFHeader = {};
 
@@ -65,10 +68,12 @@ const ApiUtil = {
       headers: CSRFToken ? { ...data.headers, ...CSRFHeader } : data.headers,
     };
 
-    const url = request ? `http://127.0.0.1:${request.url.port}` + path : path;
-    const fetchRequest = (request && request.fetch)
-      ? request.fetch(url, input)
-      : fetch(url, input);
+    const url =
+      !browser && request
+        ? `http://127.0.0.1:${request.url.port}` + path
+        : path;
+    const fetchRequest =
+      request && request.fetch ? request.fetch(url, input) : fetch(url, input);
 
     return fetchRequest
       .then((r) => r.text())
@@ -78,7 +83,7 @@ const ApiUtil = {
         } catch (err) {
           return json;
         }
-      })
+      });
   },
 };
 

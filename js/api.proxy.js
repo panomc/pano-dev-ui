@@ -1,4 +1,4 @@
-import * as api from "$lib/api.util.server";
+import * as api from "$lib/api-server.util";
 import { CSRF_HEADER } from "$lib/variables";
 import { NETWORK_ERROR } from "$lib/api.util.js";
 
