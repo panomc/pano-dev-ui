@@ -1,7 +1,6 @@
 import { CSRF_HEADER } from "$lib/variables";
 import { get } from "svelte/store";
 import { session } from "$lib/Store.js";
-import { browser } from "$app/environment";
 
 export const NETWORK_ERROR = "NETWORK_ERROR";
 
