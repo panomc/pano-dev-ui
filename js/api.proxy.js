@@ -3,7 +3,9 @@ import { CSRF_HEADER } from "$lib/variables";
 import { NETWORK_ERROR } from "$lib/api.util.js";
 
 const returnError = () => {
-  return { result: "error", error: NETWORK_ERROR };
+  const body = { result: "error", error: NETWORK_ERROR };
+
+  return new Response(JSON.stringify(body));
 };
 
 /** @type {import('@sveltejs/kit').RequestHandler} */
