@@ -9,20 +9,36 @@ const returnError = () => {
 };
 
 /** @type {import('@sveltejs/kit').RequestHandler} */
-async function handle({
-  request: { method, headers },
-  request,
-  locals: { jwt, CSRFToken },
-  url: { pathname, search },
-}) {
+export async function handle(
+  {
+    request: { method, headers },
+    request,
+    locals: { jwt, CSRFToken },
+    url: { pathname, search },
+  },
+  data = null
+) {
   let response;
 
   if (CSRFToken && headers.get(CSRF_HEADER) !== CSRFToken) {
     return returnError();
   }
 
+  if (data === null && (method === "POST" || method === "PUT")) {
+    if (
+      headers.get("content-type") &&
+      headers.get("content-type").includes("multipart/form-data")
+    ) {
+      data = await request.formData();
+    } else {
+      data = await request.text();
+    }
+  }
+
   if (method === "GET") {
-    response = await api.GET(pathname + search, jwt).catch(returnError);
+    response = await api
+      .GET({ path: pathname + search, token: jwt })
+      .catch(returnError);
   }
 
   if (method === "DELETE") {
@@ -30,14 +46,12 @@ async function handle({
   }
 
   if (method === "POST") {
-    response = await api
-      .POST(pathname + search, await request.text(), jwt)
-      .catch(returnError);
+    response = await api.POST(pathname + search, data, jwt).catch(returnError);
   }
 
   if (method === "PUT") {
     response = await api
-      .PUT(pathname + search, await request.text(), jwt)
+      .PUT({ path: pathname + search, data, token: jwt })
       .catch(returnError);
   }
 
@@ -62,4 +76,13 @@ export async function POST(request) {
 /** @type {import('@sveltejs/kit').RequestHandler} */
 export async function PUT(request) {
   return handle(request);
+}
+
+export function throwError(errorCode) {
+  const body = {
+    result: "error",
+    error: errorCode,
+  };
+
+  return new Response(JSON.stringify(body));
 }

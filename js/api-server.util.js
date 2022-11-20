@@ -1,18 +1,33 @@
 import { API_URL } from "$lib/variables";
 
-async function send({ method, path, data, token }) {
+async function send({ method, path, data, token, headers, parse = true }) {
   const opts = { method, headers: {} };
 
+  const isBodyFormData = data instanceof FormData;
+
   if (data) {
-    opts.headers["Content-Type"] = "application/json";
+    if (!isBodyFormData) {
+      opts.headers["Content-Type"] = "application/json";
+    }
+
     opts.body = data;
+  }
+
+  if (headers) {
+    opts.headers = { ...headers };
   }
 
   if (token) {
     opts.headers["Authorization"] = `Bearer ${token}`;
   }
 
-  return fetch(`${API_URL}/${path.replace("/api/", "")}`, opts)
+  const request = fetch(`${API_URL}/${path.replace("/api/", "")}`, opts);
+
+  if (parse === false) {
+    return request;
+  }
+
+  return request
     .then((r) => r.text())
     .then((json) => {
       try {
@@ -23,8 +38,8 @@ async function send({ method, path, data, token }) {
     });
 }
 
-export function GET(path, token) {
-  return send({ method: "GET", path, token });
+export function GET({ path, token, parse = true }) {
+  return send({ method: "GET", path, token, parse });
 }
 
 export function DELETE(path, token) {
@@ -35,6 +50,6 @@ export function POST(path, data, token) {
   return send({ method: "POST", path, data, token });
 }
 
-export function PUT(path, data, token) {
-  return send({ method: "PUT", path, data, token });
+export function PUT({ path, data, token, headers }) {
+  return send({ method: "PUT", path, data, token, headers });
 }

@@ -9,7 +9,7 @@ const ApiUtil = {
     return this.customRequest({ path, request, CSRFToken });
   },
 
-  post({ path, request, body, CSRFToken }) {
+  post({ path, request, body, headers, CSRFToken }) {
     return this.customRequest({
       path,
       data: {
@@ -18,6 +18,7 @@ const ApiUtil = {
         body: JSON.stringify(body || {}),
         headers: {
           "Content-Type": "application/json",
+          ...headers,
         },
       },
       request,
@@ -25,27 +26,33 @@ const ApiUtil = {
     });
   },
 
-  put({ path, request, body, CSRFToken }) {
+  put({ path, request, body, headers, CSRFToken }) {
+    const isBodyFormData = body instanceof FormData;
+
     return this.customRequest({
       path,
       data: {
         method: "PUT",
         credentials: "include",
-        body: JSON.stringify(body || {}),
-        headers: {
-          "Content-Type": "application/json",
-        },
+        body: isBodyFormData ? body : JSON.stringify(body || {}),
+        headers: isBodyFormData
+          ? headers
+          : {
+              "Content-Type": "application/json",
+              ...headers,
+            },
       },
       request,
       CSRFToken,
     });
   },
 
-  delete({ path, request, CSRFToken }) {
+  delete({ path, request, headers, CSRFToken }) {
     return this.customRequest({
       path,
       data: {
         method: "DELETE",
+        headers,
       },
       request,
       CSRFToken,
