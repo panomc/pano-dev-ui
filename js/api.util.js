@@ -10,16 +10,20 @@ const ApiUtil = {
   },
 
   post({ path, request, body, headers, CSRFToken }) {
+    const isBodyFormData = body instanceof FormData;
+
     return this.customRequest({
       path,
       data: {
         method: "POST",
         credentials: "include",
-        body: JSON.stringify(body || {}),
-        headers: {
-          "Content-Type": "application/json",
-          ...headers,
-        },
+        body: isBodyFormData ? body : JSON.stringify(body || {}),
+        headers: isBodyFormData
+          ? headers
+          : {
+              "Content-Type": "application/json",
+              ...headers,
+            },
       },
       request,
       CSRFToken,
