@@ -2,10 +2,10 @@ import * as api from "$lib/api-server.util";
 import { CSRF_HEADER } from "$lib/variables";
 import { NETWORK_ERROR } from "$lib/api.util.js";
 
-const returnError = () => {
-  const body = { result: "error", error: NETWORK_ERROR };
+export const networkErrorBody = { result: "error", error: NETWORK_ERROR };
 
-  return new Response(JSON.stringify(body));
+export const returnError = () => {
+  return new Response(JSON.stringify(networkErrorBody));
 };
 
 /** @type {import('@sveltejs/kit').RequestHandler} */
@@ -53,6 +53,10 @@ export async function handle(
     response = await api
       .PUT({ path: pathname + search, data, token: jwt })
       .catch(returnError);
+  }
+
+  if (response instanceof Response) {
+    return response;
   }
 
   return new Response(JSON.stringify(response));
