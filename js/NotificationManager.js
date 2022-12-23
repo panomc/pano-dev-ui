@@ -9,7 +9,7 @@ export function addListener(action, listener) {
 }
 
 export function onNotificationClick(notification) {
-  const listeners = actionListeners[notification.action];
+  const listeners = actionListeners[notification.type];
 
   if (listeners) {
     listeners.forEach((listener) => {
