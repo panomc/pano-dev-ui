@@ -98,12 +98,13 @@ $grid-gutter-width: 15px;
 $font-weight-base: 500;
 $font-weight-normal: 500;
 $font-weight-bold: 500;
+$font-weight-bolder: 500;
 $lead-font-weight: normal;
 $font-family-base: "Quicksand", sans-serif;
 
 // Headings
 
-$headings-font-weight: bolder;
+$headings-font-weight: $font-weight-bolder;
 
 // Borders
 
