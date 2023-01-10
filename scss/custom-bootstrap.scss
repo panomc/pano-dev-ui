@@ -4,7 +4,7 @@ $min-contrast-ratio: 2;
 
 $primary: #4560e5;
 $secondary: #72c076;
-$danger: #ed5565;
+$danger: #fc6e51;
 $success: #a0d468;
 $warning: #f7ca18;
 $dark: #434a54;
@@ -18,12 +18,10 @@ $lightglass: rgba($white, 0.1);
 $mint: #48cfad;
 $muted: #6c757d;
 $sunflower: #f8ca6d;
-$bittersweet: #fc6e51;
 $aqua: #4fc1e9;
 $lightprimary: rgba($primary, 0.075);
 $lightsecondary: rgba($secondary, 0.075);
 $lightsunflower: rgba($sunflower, 0.075);
-$lightbittersweet: rgba($bittersweet, 0.075);
 $lightaqua: rgba($aqua, 0.075);
 $lightmint: rgba($mint, 0.075);
 $transparent: rgba(white, 0);
@@ -47,13 +45,11 @@ $theme-colors: (
   "lightprimary": $lightprimary,
   "lightsecondary": $lightsecondary,
   "lightsunflower": $lightsunflower,
-  "ligthbittersweet": $lightbittersweet,
   "lightaqua": $lightaqua,
   "lightmint": $lightmint,
   "mint": $mint,
   "sunflower": $sunflower,
   "glass": $glass,
-  "bittersweet": $bittersweet,
   "lightglass": $lightglass,
   "aqua": $aqua,
 );
