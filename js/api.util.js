@@ -1,6 +1,6 @@
 import { CSRF_HEADER } from "$lib/variables";
 import { get } from "svelte/store";
-import { session } from "$lib/Store.js";
+import { page } from "$app/stores";
 
 export const NETWORK_ERROR = "NETWORK_ERROR";
 
@@ -63,13 +63,26 @@ const ApiUtil = {
     });
   },
 
-  customRequest({
-    path,
-    data = {},
-    request,
-    CSRFToken = get(session).CSRFToken,
-  }) {
+  async customRequest({ path, data = {}, request, CSRFToken }) {
     const CSRFHeader = {};
+
+    if (!CSRFToken) {
+      let session;
+
+      if (request) {
+        const parentData = await request.parent();
+
+        const { session: parentSession } = parentData;
+
+        session = parentSession;
+      } else {
+        const { session: pageSession } = get(page).data;
+
+        session = pageSession;
+      }
+
+      CSRFToken = get(session).CSRFToken;
+    }
 
     if (CSRFToken) CSRFHeader[CSRF_HEADER] = CSRFToken;
 
