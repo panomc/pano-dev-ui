@@ -1,15 +1,16 @@
 import { CSRF_HEADER } from "$lib/variables";
 import { get } from "svelte/store";
 import { page } from "$app/stores";
+import { getContext } from "svelte";
 
 export const NETWORK_ERROR = "NETWORK_ERROR";
 
 const ApiUtil = {
-  get({ path, request, CSRFToken }) {
-    return this.customRequest({ path, request, CSRFToken });
+  get({ path, request, CSRFToken, session }) {
+    return this.customRequest({ path, request, CSRFToken, session });
   },
 
-  post({ path, request, body, headers, CSRFToken }) {
+  post({ path, request, body, headers, CSRFToken, session }) {
     const isBodyFormData = body instanceof FormData;
 
     return this.customRequest({
@@ -27,10 +28,11 @@ const ApiUtil = {
       },
       request,
       CSRFToken,
+      session,
     });
   },
 
-  put({ path, request, body, headers, CSRFToken }) {
+  put({ path, request, body, headers, CSRFToken, session }) {
     const isBodyFormData = body instanceof FormData;
 
     return this.customRequest({
@@ -48,10 +50,11 @@ const ApiUtil = {
       },
       request,
       CSRFToken,
+      session,
     });
   },
 
-  delete({ path, request, headers, CSRFToken }) {
+  delete({ path, request, headers, CSRFToken, session }) {
     return this.customRequest({
       path,
       data: {
@@ -60,10 +63,17 @@ const ApiUtil = {
       },
       request,
       CSRFToken,
+      session,
     });
   },
 
-  async customRequest({ path, data = {}, request, CSRFToken }) {
+  async customRequest({
+    path,
+    data = {},
+    request,
+    CSRFToken,
+    session: customSession,
+  }) {
     const CSRFHeader = {};
 
     if (!CSRFToken) {
@@ -72,16 +82,20 @@ const ApiUtil = {
       if (request) {
         const parentData = await request.parent();
 
-        const { session: parentSession } = parentData;
+        if (Object.keys(parentData).length === 0) {
+          session = customSession;
+        } else {
+          const { session: parentSession } = parentData;
 
-        session = parentSession;
+          session = parentSession;
+        }
       } else {
         const { session: pageSession } = get(page).data;
 
         session = pageSession;
       }
 
-      CSRFToken = get(session).CSRFToken;
+      CSRFToken = session.CSRFToken;
     }
 
     if (CSRFToken) CSRFHeader[CSRF_HEADER] = CSRFToken;
