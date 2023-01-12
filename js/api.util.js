@@ -95,7 +95,7 @@ const ApiUtil = {
         session = pageSession;
       }
 
-      CSRFToken = session.CSRFToken;
+      CSRFToken = session && session.CSRFToken;
     }
 
     if (CSRFToken) CSRFHeader[CSRF_HEADER] = CSRFToken;
