@@ -1,8 +1,11 @@
 import { API_URL, CSRF_HEADER } from "$lib/variables";
 import { get } from "svelte/store";
 import { page } from "$app/stores";
+import { browser } from "$app/environment";
 
 export const NETWORK_ERROR = "NETWORK_ERROR";
+
+export const networkErrorBody = { result: "error", error: NETWORK_ERROR };
 
 const ApiUtil = {
   get({ path, request, CSRFToken, token }) {
@@ -62,7 +65,7 @@ const ApiUtil = {
         const { session: parentSession } = parentData;
 
         session = parentSession;
-      } else {
+      } else if (browser) {
         const { session: pageSession } = get(page).data;
 
         session = pageSession;
