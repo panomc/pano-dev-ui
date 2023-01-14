@@ -1,4 +1,4 @@
-import { CSRF_HEADER } from "$lib/variables";
+import { API_URL, CSRF_HEADER } from "$lib/variables";
 import { get } from "svelte/store";
 import { page } from "$app/stores";
 
@@ -91,9 +91,11 @@ const ApiUtil = {
 
     if (token) {
       options.headers["Authorization"] = `Bearer ${token}`;
+    }else {
+      options["credentials"] = "include"
     }
 
-    // path = `${API_URL}/${path.replace("/api/", "")}`;
+    path = `${API_URL}/${path.replace("/api/", "")}`;
 
     const fetchRequest =
       request && request.fetch
