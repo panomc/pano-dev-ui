@@ -1,60 +1,45 @@
 import { CSRF_HEADER } from "$lib/variables";
 import { get } from "svelte/store";
 import { page } from "$app/stores";
-import { getContext } from "svelte";
 
 export const NETWORK_ERROR = "NETWORK_ERROR";
 
 const ApiUtil = {
-  get({ path, request, CSRFToken, session }) {
-    return this.customRequest({ path, request, CSRFToken, session });
+  get({ path, request, CSRFToken, token }) {
+    return this.customRequest({ path, request, CSRFToken, token });
   },
 
-  post({ path, request, body, headers, CSRFToken, session }) {
-    const isBodyFormData = body instanceof FormData;
-
+  post({ path, request, body, headers, CSRFToken, token }) {
     return this.customRequest({
       path,
       data: {
         method: "POST",
         credentials: "include",
-        body: isBodyFormData ? body : JSON.stringify(body || {}),
-        headers: isBodyFormData
-          ? headers
-          : {
-              "Content-Type": "application/json",
-              ...headers,
-            },
+        body,
+        headers,
       },
       request,
       CSRFToken,
-      session,
+      token,
     });
   },
 
-  put({ path, request, body, headers, CSRFToken, session }) {
-    const isBodyFormData = body instanceof FormData;
-
+  put({ path, request, body, headers, CSRFToken, token }) {
     return this.customRequest({
       path,
       data: {
         method: "PUT",
         credentials: "include",
-        body: isBodyFormData ? body : JSON.stringify(body || {}),
-        headers: isBodyFormData
-          ? headers
-          : {
-              "Content-Type": "application/json",
-              ...headers,
-            },
+        body,
+        headers,
       },
       request,
       CSRFToken,
-      session,
+      token,
     });
   },
 
-  delete({ path, request, headers, CSRFToken, session }) {
+  delete({ path, request, headers, CSRFToken, token }) {
     return this.customRequest({
       path,
       data: {
@@ -63,32 +48,20 @@ const ApiUtil = {
       },
       request,
       CSRFToken,
-      session,
+      token,
     });
   },
 
-  async customRequest({
-    path,
-    data = {},
-    request,
-    CSRFToken,
-    session: customSession,
-  }) {
-    const CSRFHeader = {};
-
+  async customRequest({ path, data = {}, request, CSRFToken, token }) {
     if (!CSRFToken) {
       let session;
 
       if (request) {
         const parentData = await request.parent();
 
-        if (Object.keys(parentData).length === 0) {
-          session = customSession;
-        } else {
-          const { session: parentSession } = parentData;
+        const { session: parentSession } = parentData;
 
-          session = parentSession;
-        }
+        session = parentSession;
       } else {
         const { session: pageSession } = get(page).data;
 
@@ -98,17 +71,34 @@ const ApiUtil = {
       CSRFToken = session && session.CSRFToken;
     }
 
+    const CSRFHeader = {};
+
     if (CSRFToken) CSRFHeader[CSRF_HEADER] = CSRFToken;
 
-    const input = {
+    if (!(data.body instanceof FormData)) {
+      data.body = JSON.stringify(data.body);
+
+      data.headers = {
+        "Content-Type": "application/json",
+        ...data.headers,
+      };
+    }
+
+    const options = {
       ...data,
       headers: CSRFToken ? { ...data.headers, ...CSRFHeader } : data.headers,
     };
 
+    if (token) {
+      options.headers["Authorization"] = `Bearer ${token}`;
+    }
+
+    // path = `${API_URL}/${path.replace("/api/", "")}`;
+
     const fetchRequest =
       request && request.fetch
-        ? request.fetch(path, input)
-        : fetch(path, input);
+        ? request.fetch(path, options)
+        : fetch(path, options);
 
     return fetchRequest
       .then((r) => r.text())
