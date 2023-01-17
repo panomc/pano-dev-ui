@@ -3,19 +3,19 @@
 $min-contrast-ratio: 2;
 
 $primary: #4560e5;
-$secondary: #72c076;
+$secondary: #72C076;
 $danger: #fc6e51;
 $success: #48cfad;
-$warning: #ffc107;
+$warning: #F6BB42;
 $dark: #434a54;
 $gray: #ccd1d9;
-$gray-200: #ccd1d9;
+$gray-200: red;
 $light: #f5f7fa;
 $white: #fff;
 $black: #000;
 $mint: #48cfad;
 $muted: #6c757d;
-$transparent: rgba(white, 0);
+$transparent: transparent;
 
 $body-bg: $light;
 $body-color: $dark;
@@ -51,15 +51,15 @@ $primaries: (
 ) !default;
 
 $secondaries: (
-  "primary-100": #c9d2ff,
-  "primary-200": #a4b3ff,
-  "primary-300": #7e94ff,
-  "primary-400": #5975ff,
-  "primary-500": $secondary,
-  "primary-600": #314ac3,
-  "primary-700": #2136a1,
-  "primary-800": #14267f,
-  "primary-900": #0a185d,
+  "secondary-100": #DBFFDD,
+  "secondary-200": #C0FFC4,
+  "secondary-300": #A2FAA8,
+  "secondary-400": #89DD8F,
+  "secondary-500": $secondary,
+  "secondary-600": #5CA361,
+  "secondary-700": #48864C,
+  "secondary-800": #366939,
+  "secondary-900": #254B27,
 ) !default;
 
 // Settings
@@ -92,7 +92,10 @@ $border-radius-lg: 0.3rem;
 $border-radius-sm: 0.3rem;
 
 // Buttons
-
+$btn-hover-bg-tint-amount: 0%;
+$btn-hover-bg-shade-amount: 10%;
+$btn-active-bg-shade-amount: 20%;
+$btn-active-bg-tint-amount: 0%;
 $btn-padding-x-lg: 1rem;
 $btn-padding-x: 1rem;
 $btn-padding-x-sm: 1rem;
