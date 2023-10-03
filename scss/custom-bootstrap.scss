@@ -3,10 +3,10 @@
 $min-contrast-ratio: 2;
 
 $primary: #4560e5;
-$secondary: #72C076;
+$secondary: #72c076;
 $danger: #fc6e51;
 $success: #48cfad;
-$warning: #F6BB42;
+$warning: #f6bb42;
 $dark: #434a54;
 $gray: #ccd1d9;
 $light: #f5f7fa;
@@ -50,21 +50,27 @@ $primaries: (
 ) !default;
 
 $secondaries: (
-  "secondary-100": #DBFFDD,
-  "secondary-200": #C0FFC4,
-  "secondary-300": #A2FAA8,
-  "secondary-400": #89DD8F,
+  "secondary-100": #dbffdd,
+  "secondary-200": #c0ffc4,
+  "secondary-300": #a2faa8,
+  "secondary-400": #89dd8f,
   "secondary-500": $secondary,
-  "secondary-600": #5CA361,
-  "secondary-700": #48864C,
+  "secondary-600": #5ca361,
+  "secondary-700": #48864c,
   "secondary-800": #366939,
-  "secondary-900": #254B27,
+  "secondary-900": #254b27,
 ) !default;
 
 // Settings
 
 $enable-shadows: true;
 $enable-rounded: true;
+
+// Globals
+$border-width: 2px;
+$border-width-sm: 2px;
+$border-width-lg: 3px;
+$border-width-xl: 4px;
 
 // Grids
 
@@ -84,11 +90,9 @@ $font-family-base: "Quicksand", sans-serif;
 $headings-color: $black;
 $headings-font-weight: $font-weight-bolder;
 
-// Borders
+// Hr
 
-$border-radius: 0.3rem;
-$border-radius-lg: 0.3rem;
-$border-radius-sm: 0.3rem;
+$hr-border-width: 1px;
 
 // Buttons
 $btn-hover-bg-tint-amount: 0%;
@@ -160,21 +164,21 @@ $link-decoration: none;
 
 // Inputs
 
-$input-bg: $white;
-$input-font-weight: $font-weight-normal;
+$input-border-color: transparent;
+$input-focus-border-color: $primary;
+
+// Checks
+
+$form-check-input-checked-bg-color: $secondary;
+$form-check-input-checked-bg-color: $secondary;
 
 // Dropdowns
 
 $dropdown-header-color: $black;
 $dropdown-link-color: $primary;
-$dropdown-link-active-color: $primary;
 $dropdown-link-hover-bg: rgba(
   $color: $primary,
-  $alpha: 0.1,
-);
-$dropdown-link-active-bg: rgba(
-  $color: $primary,
-  $alpha: 0.1,
+  $alpha: 0.25,
 );
 $dropdown-item-padding-y: 0.4rem;
 
@@ -211,10 +215,6 @@ $nav-tabs-link-active-bg: $white;
 
 // Paginations
 
-$pagination-active-bg: rgba(
-  $color: $primary,
-  $alpha: 0.1,
-);
 $pagination-active-color: $primary;
 $pagination-border-width: 0;
 
