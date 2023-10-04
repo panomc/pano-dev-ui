@@ -78,9 +78,9 @@ $border-radius-sm: 4.8px;
 $border-radius-lg: 9.6px;
 
 $box-shadow-inset: 0;
-$box-shadow-sm: 0 3px 0 rgba($dark, .15);
-$box-shadow: 0 5px 0 rgba($dark, .15);
-$box-shadow-lg: 0 8px 0 rgba($dark, .15);
+$box-shadow-sm: 0 3px 0 rgba($dark, 0.15);
+$box-shadow: 0 5px 0 rgba($dark, 0.15);
+$box-shadow-lg: 0 8px 0 rgba($dark, 0.15);
 
 // Fonts
 
@@ -185,8 +185,9 @@ $nav-tabs-link-active-bg: $white;
 
 // Paginations
 
-$pagination-active-color: $primary;
 $pagination-border-width: 0;
+$pagination-bg: $body-bg;
+$pagination-disabled-bg: $body-bg;
 
 // Badges
 
