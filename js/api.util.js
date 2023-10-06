@@ -98,7 +98,7 @@ const ApiUtil = {
       options["credentials"] = "include"
     }
 
-    path = `${API_URL}/${path.replace("/api/", "")}`;
+    path = `${API_URL.replace("/api", "")}/${path.replace("/api/", "panel/api/")}`;
 
     const fetchRequest =
       request && request.fetch
