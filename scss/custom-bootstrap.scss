@@ -115,6 +115,7 @@ $btn-active-box-shadow: 0;
 
 // Modals
 
+$modal-content-bg: $white;
 $modal-content-border-width: 0;
 $modal-backdrop-opacity: 0.25;
 $modal-content-box-shadow-xs: $box-shadow;
@@ -158,15 +159,10 @@ $navbar-nav-link-padding-x: 1rem;
 
 // Navbar Dark
 
-$navbar-dark-active-color: $warning;
-$navbar-dark-color: $light;
 $navbar-dark-toggler-border-color: $transparent;
 
 // Navbar Light
 
-$navbar-light-color: $dark;
-$navbar-light-hover-color: $black;
-$navbar-light-active-color: $black;
 $navbar-light-toggler-border-color: $transparent;
 
 // Tables
