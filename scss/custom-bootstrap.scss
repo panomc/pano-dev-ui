@@ -15,6 +15,7 @@ $black: #000;
 $muted: #6c757d;
 $transparent: transparent;
 
+$body-bg: $white;
 $body-color: $dark;
 
 $theme-colors: (
@@ -85,7 +86,7 @@ $font-weight-base: 500;
 $font-weight-normal: 500;
 $font-weight-bold: 500;
 $font-weight-bolder: 500;
-$lead-font-weight: 500;
+$lead-font-weight: 400;
 $font-family-base: "Quicksand", sans-serif;
 
 // Headings
@@ -179,7 +180,6 @@ $pagination-disabled-bg: $body-bg;
 
 // Badges
 
-$badge-font-size: 1rem;
 $badge-padding-x: 1rem;
 $badge-padding-y: 0.5rem;
 $badge-font-weight: $font-family-base;
