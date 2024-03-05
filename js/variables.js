@@ -9,3 +9,5 @@ export const CSRF_TOKEN_COOKIE_NAME = "CSRFToken";
 export const JWT_COOKIE_NAME = "jwt";
 
 export const CSRF_HEADER = "X-CSRF-Token".toLowerCase();
+
+export const PLUGIN_DEV_MODE = import.meta.env.VITE_PLUGIN_DEV_MODE;

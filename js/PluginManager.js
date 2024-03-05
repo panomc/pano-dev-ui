@@ -3,7 +3,8 @@ import fs from "fs";
 import { browser } from "$app/environment";
 
 import ApiUtil from "$lib/api.util.js";
-import { API_URL } from "$lib/variables.js";
+import { API_URL, PLUGIN_DEV_MODE } from "$lib/variables.js";
+import { base } from "$app/paths";
 
 const plugins = {};
 
@@ -12,6 +13,38 @@ const manifestFileName = "manifest.json";
 
 function log(message) {
   console.log(`[Plugin Manager] ${message}`);
+}
+
+const pano = {};
+
+export async function prepareSiteInfo(siteInfo) {
+  if (!PLUGIN_DEV_MODE) {
+    return siteInfo
+  }
+
+  if (!fs.existsSync(pluginsFolder)) {
+    fs.mkdirSync(pluginsFolder, { recursive: true });
+  }
+
+  const readPluginsFolder = fs.readdirSync(pluginsFolder);
+
+  const plugins = {}
+
+  readPluginsFolder.forEach((pluginId) => {
+    const manifestFile = fs.readFileSync(
+      pluginsFolder + pluginId + "/" + manifestFileName,
+      {
+        encoding: "utf8",
+        flag: "r",
+      },
+    );
+
+    plugins[pluginId] = JSON.parse(manifestFile);
+  });
+
+  siteInfo.plugins = plugins
+
+  return siteInfo
 }
 
 export async function initializePlugins(siteInfo) {
@@ -33,12 +66,14 @@ export async function initializePlugins(siteInfo) {
       });
 
     readPluginsFolder.forEach((pluginId) => {
-      if (pluginsInfo[pluginId] === undefined) {
-        log(`Couldn't find plugin '${pluginId}', removing...`);
+      if (!PLUGIN_DEV_MODE) {
+        if (pluginsInfo[pluginId] === undefined) {
+          log(`Couldn't find plugin '${pluginId}', removing...`);
 
-        fs.rmSync(pluginsFolder + pluginId, { recursive: true, force: true });
+          fs.rmSync(pluginsFolder + pluginId, { recursive: true, force: true });
 
-        return;
+          return;
+        }
       }
 
       const manifestFile = fs.readFileSync(
@@ -52,80 +87,84 @@ export async function initializePlugins(siteInfo) {
       plugins[pluginId] = JSON.parse(manifestFile);
     });
 
-    Object.keys(pluginsInfo)
-      .filter((pluginId) => plugins[pluginId] === undefined)
-      .forEach((pluginId) => {
+    if (!PLUGIN_DEV_MODE) {
+      Object.keys(pluginsInfo)
+        .filter((pluginId) => plugins[pluginId] === undefined)
+        .forEach((pluginId) => {
+          const pluginFolder = pluginsFolder + pluginId;
+          const manifestFilePath = pluginFolder + "/" + manifestFileName;
+          const pluginManifest = pluginsInfo[pluginId];
+
+          log(`Installing plugin '${pluginId}'...`);
+
+          if (!fs.existsSync(pluginFolder)) {
+            fs.mkdirSync(pluginFolder, { recursive: true });
+          }
+
+          fs.writeFileSync(
+            manifestFilePath,
+            JSON.stringify(pluginManifest, null, 2),
+          );
+        });
+    }
+
+    if (!PLUGIN_DEV_MODE) {
+      for (const pluginId of Object.keys(plugins)) {
         const pluginFolder = pluginsFolder + pluginId;
-        const manifestFilePath = pluginFolder + "/" + manifestFileName;
-        const pluginManifest = pluginsInfo[pluginId];
 
-        log(`Installing plugin '${pluginId}'...`);
+        const pluginInfoManifest = pluginsInfo[pluginId];
+        let pluginManifest = plugins[pluginId];
 
-        if (!fs.existsSync(pluginFolder)) {
-          fs.mkdirSync(pluginFolder, { recursive: true });
+        const files = fs.readdirSync(pluginFolder);
+
+        let noHashMatch = false;
+
+        Object.keys(pluginManifest.uiHashes)
+          .filter(
+            (fileName) =>
+              pluginManifest.uiHashes[fileName] !==
+              pluginInfoManifest.uiHashes[fileName],
+          )
+          .forEach((hash) => {
+            noHashMatch = true;
+          });
+
+        if (
+          pluginManifest.version !== pluginInfoManifest.version ||
+          noHashMatch
+        ) {
+          const manifestFilePath = pluginFolder + "/" + manifestFileName;
+
+          log(`Updating plugin '${pluginId}'.`);
+
+          plugins[pluginId] = pluginInfoManifest;
+          pluginManifest = plugins[pluginId];
+          fs.writeFileSync(
+            manifestFilePath,
+            JSON.stringify(pluginManifest, null, 2),
+          );
+
+          files
+            .filter((fileName) => fileName !== manifestFileName)
+            .forEach((fileName) => {
+              fs.rmSync(pluginFolder + "/" + fileName, { force: true });
+            });
         }
 
-        fs.writeFileSync(
-          manifestFilePath,
-          JSON.stringify(pluginManifest, null, 2),
-        );
-      });
+        for (const fileName of Object.keys(pluginManifest.uiHashes)) {
+          const fixedFileName = fileName.substring("plugin-ui/".length);
+          const filePath = pluginFolder + "/" + fixedFileName;
 
-    for (const pluginId of Object.keys(plugins)) {
-      const pluginFolder = pluginsFolder + pluginId;
+          if (!fs.existsSync(filePath)) {
+            log(`Plugin resource not found: '${filePath}'.`);
+            log(`Downloading...`);
 
-      const pluginInfoManifest = pluginsInfo[pluginId];
-      let pluginManifest = plugins[pluginId];
+            const file = await ApiUtil.get({
+              path: `/api/plugins/${pluginId}/resources/${fileName}`,
+            });
 
-      const files = fs.readdirSync(pluginFolder);
-
-      let noHashMatch = false;
-
-      Object.keys(pluginManifest.uiHashes)
-        .filter(
-          (fileName) =>
-            pluginManifest.uiHashes[fileName] !==
-            pluginInfoManifest.uiHashes[fileName],
-        )
-        .forEach((hash) => {
-          noHashMatch = true;
-        });
-
-      if (
-        pluginManifest.version !== pluginInfoManifest.version ||
-        noHashMatch
-      ) {
-        const manifestFilePath = pluginFolder + "/" + manifestFileName;
-
-        log(`Updating plugin '${pluginId}'.`);
-
-        plugins[pluginId] = pluginInfoManifest;
-        pluginManifest = plugins[pluginId];
-        fs.writeFileSync(
-          manifestFilePath,
-          JSON.stringify(pluginManifest, null, 2),
-        );
-
-        files
-          .filter((fileName) => fileName !== manifestFileName)
-          .forEach((fileName) => {
-            fs.rmSync(pluginFolder + "/" + fileName, { force: true });
-          });
-      }
-
-      for (const fileName of Object.keys(pluginManifest.uiHashes)) {
-        const fixedFileName = fileName.substring("plugin-ui/".length);
-        const filePath = pluginFolder + "/" + fixedFileName;
-
-        if (!fs.existsSync(filePath)) {
-          log(`Plugin resource not found: '${filePath}'.`);
-          log(`Downloading...`);
-
-          const file = await ApiUtil.get({
-            path: `/api/plugins/${pluginId}/resources/${fileName}`,
-          });
-
-          fs.writeFileSync(filePath, file);
+            fs.writeFileSync(filePath, file);
+          }
         }
       }
     }
@@ -136,6 +175,7 @@ export async function initializePlugins(siteInfo) {
   }
 
   await loadPlugins();
+  await enablePlugins();
 }
 
 async function loadPlugins() {
@@ -145,7 +185,7 @@ async function loadPlugins() {
 
     if (browser) {
       plugin.module = await import(
-        /* @vite-ignore */ `${API_URL}/plugins/${pluginId}/resources/plugin-ui/client.mjs`
+        /* @vite-ignore */ `${PLUGIN_DEV_MODE ? base + '/dev-api' : API_URL}/plugins/${pluginId}/resources/plugin-ui/client.mjs`
       );
     } else {
       const path = `/${pluginFolder}/server.mjs?${Date.now()}`;
@@ -157,6 +197,18 @@ async function loadPlugins() {
   for (const pluginId of Object.keys(plugins)) {
     const plugin = plugins[pluginId];
 
-    await plugin.module.onLoad();
+    if (plugin.module.onLoad !== undefined) {
+      await plugin.module.onLoad(pano);
+    }
+  }
+}
+
+async function enablePlugins() {
+  for (const pluginId of Object.keys(plugins)) {
+    const plugin = plugins[pluginId];
+
+    if (plugin.module.onEnable !== undefined) {
+      await plugin.module.onEnable(pano);
+    }
   }
 }
