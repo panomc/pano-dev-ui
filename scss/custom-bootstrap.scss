@@ -2,8 +2,8 @@
 
 $min-contrast-ratio: 2;
 
-$primary: #4560e5;
-$secondary: #72c076;
+$primary: #212529;
+$secondary: #f6bb42;
 $danger: #fc6e51;
 $success: #48cfad;
 $warning: #f6bb42;
@@ -108,7 +108,7 @@ $btn-padding-x-lg: 1rem;
 $btn-padding-x: 1rem;
 $btn-padding-x-sm: 1rem;
 $btn-font-weight: $font-weight-base !important;
-$btn-box-shadow: $box-shadow;
+$btn-box-shadow: $box-shadow-sm;
 $btn-active-box-shadow: 0;
 
 // Modals
@@ -168,8 +168,6 @@ $nav-tabs-link-active-bg: $white;
 
 // Paginations
 
-$pagination-border-width: 0;
-$pagination-bg: $body-bg;
 $pagination-disabled-bg: $body-bg;
 
 // Badges
