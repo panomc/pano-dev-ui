@@ -15,7 +15,9 @@ function log(message) {
   console.log(`[Plugin Manager] ${message}`);
 }
 
-const pano = {};
+const pano = {
+  isPanel: base === "/panel"
+};
 
 export async function prepareSiteInfo(siteInfo) {
   if (!PLUGIN_DEV_MODE) {
