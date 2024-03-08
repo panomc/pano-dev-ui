@@ -190,7 +190,7 @@ async function loadPlugins() {
         /* @vite-ignore */ `${PLUGIN_DEV_MODE ? base + '/dev-api' : API_URL}/plugins/${pluginId}/resources/plugin-ui/client.mjs`
       );
     } else {
-      const path = `/${pluginFolder}/server.mjs?${Date.now()}`;
+      const path = `${process.cwd()}/${pluginFolder}/server.mjs?${Date.now()}`;
 
       plugin.module = await import(/* @vite-ignore */ path);
     }
