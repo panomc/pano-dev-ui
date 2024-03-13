@@ -94,8 +94,8 @@ const ApiUtil = {
 
     if (token) {
       options.headers["Authorization"] = `Bearer ${token}`;
-    }else {
-      options["credentials"] = "include"
+    } else {
+      options["credentials"] = "include";
     }
 
     path = `${API_URL}/${path.replace("/api/", "")}`;

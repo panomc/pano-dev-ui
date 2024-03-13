@@ -16,12 +16,12 @@ function log(message) {
 }
 
 const pano = {
-  isPanel: base === "/panel"
+  isPanel: base === "/panel",
 };
 
 export async function prepareSiteInfo(siteInfo) {
   if (!PLUGIN_DEV_MODE) {
-    return siteInfo
+    return siteInfo;
   }
 
   if (!fs.existsSync(pluginsFolder)) {
@@ -30,7 +30,7 @@ export async function prepareSiteInfo(siteInfo) {
 
   const readPluginsFolder = fs.readdirSync(pluginsFolder);
 
-  const plugins = {}
+  const plugins = {};
 
   readPluginsFolder.forEach((pluginId) => {
     const manifestFile = fs.readFileSync(
@@ -44,9 +44,9 @@ export async function prepareSiteInfo(siteInfo) {
     plugins[pluginId] = JSON.parse(manifestFile);
   });
 
-  siteInfo.plugins = plugins
+  siteInfo.plugins = plugins;
 
-  return siteInfo
+  return siteInfo;
 }
 
 export async function initializePlugins(siteInfo) {
@@ -187,7 +187,7 @@ async function loadPlugins() {
 
     if (browser) {
       plugin.module = await import(
-        /* @vite-ignore */ `${PLUGIN_DEV_MODE ? base + '/dev-api' : API_URL}/plugins/${pluginId}/resources/plugin-ui/client.mjs`
+        /* @vite-ignore */ `${PLUGIN_DEV_MODE ? base + "/dev-api" : API_URL}/plugins/${pluginId}/resources/plugin-ui/client.mjs`
       );
     } else {
       const path = `${process.cwd()}/${pluginFolder}/server.mjs?${Date.now()}`;
