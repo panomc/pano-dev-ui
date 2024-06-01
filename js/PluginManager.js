@@ -74,6 +74,7 @@ export async function initializePlugins(siteInfo) {
 
           fs.rmSync(pluginsFolder + pluginId, { recursive: true, force: true });
 
+          delete plugins[pluginId];
           return;
         }
       }
