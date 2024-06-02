@@ -2,6 +2,16 @@ import fs from "fs";
 
 import { browser } from "$app/environment";
 
+let pathStuff, urlStuff;
+
+if (!browser) {
+  const path = await import("path");
+  const url = await import("url");
+
+  pathStuff = path
+  urlStuff = url
+}
+
 import ApiUtil from "$lib/api.util.js";
 import { API_URL, PLUGIN_DEV_MODE } from "$lib/variables.js";
 import { base } from "$app/paths";
@@ -191,9 +201,19 @@ async function loadPlugins() {
         /* @vite-ignore */ `${PLUGIN_DEV_MODE ? base + "/dev-api" : API_URL}/plugins/${pluginId}/resources/plugin-ui/client.mjs`
       );
     } else {
-      const path = `${process.cwd()}/${pluginFolder}/server.mjs?${Date.now()}`;
+      const path = `${pluginFolder}/server.mjs?${Date.now()}`;
 
-      plugin.module = await import(/* @vite-ignore */ path);
+      const __filename = urlStuff.fileURLToPath(import.meta.url);
+
+      const currentDir = pathStuff.dirname(__filename); // Directory of the current file
+      const targetFile = pathStuff.resolve(currentDir, process.cwd()); // Absolute path of the target file
+
+      const relativePath = pathStuff.relative(currentDir, targetFile);
+      const levels = relativePath.split(pathStuff.sep).length;
+
+      const upDirs = '../'.repeat(levels); // Repeating '../' based on the number of levels
+
+      plugin.module = await import(/* @vite-ignore */ upDirs + path);
     }
   }
 
