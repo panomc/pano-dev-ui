@@ -118,6 +118,8 @@ export async function initializePlugins(siteInfo) {
             manifestFilePath,
             JSON.stringify(pluginManifest, null, 2),
           );
+
+          plugins[pluginId] = {...pluginManifest};
         });
     }
 
