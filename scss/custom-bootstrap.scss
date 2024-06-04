@@ -2,12 +2,13 @@
 
 $min-contrast-ratio: 2;
 
-$primary: #212529;
-$secondary: #f6bb42;
+$primary: #0A1931;
+$secondary: #FFC947;
 $danger: #fc6e51;
-$success: #48cfad;
-$warning: #f6bb42;
-$dark: #212529;
+$success: #4ECDC4;
+$warning: #FD3E81;
+$info: #1E96FC;
+$dark: #0A1931;
 $gray: #ccd1d9;
 $light: #f5f7fa;
 $white: #fff;
@@ -25,6 +26,7 @@ $theme-colors: (
   "danger": $danger,
   "success": $success,
   "warning": $warning,
+  "info": $info,
   "light": $light,
   "dark": $dark,
   "muted": $muted,
