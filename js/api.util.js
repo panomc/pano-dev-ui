@@ -8,11 +8,11 @@ export const NETWORK_ERROR = "NETWORK_ERROR";
 export const networkErrorBody = { result: "error", error: NETWORK_ERROR };
 
 const ApiUtil = {
-  get({ path, request, CSRFToken, token }) {
-    return this.customRequest({ path, request, CSRFToken, token });
+  get({ path, request, csrfToken, token }) {
+    return this.customRequest({ path, request, csrfToken, token });
   },
 
-  post({ path, request, body, headers, CSRFToken, token }) {
+  post({ path, request, body, headers, csrfToken, token }) {
     return this.customRequest({
       path,
       data: {
@@ -22,12 +22,12 @@ const ApiUtil = {
         headers,
       },
       request,
-      CSRFToken,
+      csrfToken,
       token,
     });
   },
 
-  put({ path, request, body, headers, CSRFToken, token }) {
+  put({ path, request, body, headers, csrfToken, token }) {
     return this.customRequest({
       path,
       data: {
@@ -37,12 +37,12 @@ const ApiUtil = {
         headers,
       },
       request,
-      CSRFToken,
+      csrfToken,
       token,
     });
   },
 
-  delete({ path, request, headers, CSRFToken, token }) {
+  delete({ path, request, headers, csrfToken, token }) {
     return this.customRequest({
       path,
       data: {
@@ -50,13 +50,13 @@ const ApiUtil = {
         headers,
       },
       request,
-      CSRFToken,
+      csrfToken,
       token,
     });
   },
 
-  async customRequest({ path, data = {}, request, CSRFToken, token }) {
-    if (!CSRFToken) {
+  async customRequest({ path, data = {}, request, csrfToken, token }) {
+    if (!csrfToken) {
       let session;
 
       if (request) {
@@ -71,12 +71,12 @@ const ApiUtil = {
         session = pageSession;
       }
 
-      CSRFToken = session && session.CSRFToken;
+      csrfToken = session && session.csrfToken;
     }
 
     const CSRFHeader = {};
 
-    if (CSRFToken) CSRFHeader[CSRF_HEADER] = CSRFToken;
+    if (csrfToken) CSRFHeader[CSRF_HEADER] = csrfToken;
 
     if (!(data.body instanceof FormData)) {
       data.body = JSON.stringify(data.body);
@@ -89,7 +89,7 @@ const ApiUtil = {
 
     const options = {
       ...data,
-      headers: CSRFToken ? { ...data.headers, ...CSRFHeader } : data.headers,
+      headers: csrfToken ? { ...data.headers, ...CSRFHeader } : data.headers,
     };
 
     if (token) {

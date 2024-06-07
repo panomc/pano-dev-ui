@@ -5,10 +5,10 @@ export const SETUP_URL = import.meta.env.VITE_SETUP_URL;
 
 export const COOKIE_PREFIX = import.meta.env.VITE_COOKIE_PREFIX;
 
-export const CSRF_TOKEN_COOKIE_NAME = "CSRFToken";
-export const JWT_COOKIE_NAME = "jwt";
+export const CSRF_TOKEN_COOKIE_NAME = "csrf_token";
+export const JWT_COOKIE_NAME = "auth_token";
 
-export const CSRF_HEADER = "X-CSRF-Token".toLowerCase();
+export const CSRF_HEADER = "X-CSRF-Token";
 
 export const PLUGIN_DEV_MODE =
   import.meta.env.VITE_PLUGIN_DEV_MODE?.toLowerCase() === "true";
