@@ -65,7 +65,7 @@ const ApiUtil = {
         const { session: parentSession } = parentData;
 
         session = parentSession;
-      } else if (browser) {
+      } else if (browser && get(page).data) {
         const { session: pageSession } = get(page).data;
 
         session = pageSession;
