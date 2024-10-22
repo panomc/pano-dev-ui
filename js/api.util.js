@@ -97,7 +97,9 @@ const ApiUtil = {
     } else {
       const isCredentialsSupported = "credentials" in Request.prototype;
 
-      options["credentials"] = isCredentialsSupported ? "include" : undefined;
+      if (isCredentialsSupported) {
+        options["credentials"] = "include";
+      }
     }
 
     path = `${API_URL}/${path.replace("/api/", "")}`;
