@@ -95,7 +95,9 @@ const ApiUtil = {
     if (token) {
       options.headers["Authorization"] = `Bearer ${token}`;
     } else {
-      options["credentials"] = "include";
+      const isCredentialsSupported = "credentials" in Request.prototype;
+
+      options["credentials"] = isCredentialsSupported ? "include" : undefined;
     }
 
     path = `${API_URL}/${path.replace("/api/", "")}`;
