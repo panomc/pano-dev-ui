@@ -9,7 +9,12 @@ function setTooltip(element, [value, options]) {
   instance.setProps(options);
 }
 
-export default function tooltip(element, [value, options]) {
+export default function tooltip(element, properties) {
+  if (!properties) {
+    return
+  }
+
+  let [value, options] = properties
   if (typeof options === "undefined") options = {};
 
   setTooltip(element, [value, options]);
