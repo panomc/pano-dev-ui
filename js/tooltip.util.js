@@ -27,7 +27,13 @@ export default function tooltip(element, properties) {
   });
 
   return {
-    update([value, options]) {
+    update(updatedValue) {
+      if (!updatedValue) {
+        return
+      }
+
+      let [value, options] = updatedValue
+
       if (typeof options === "undefined") options = {};
 
       setTooltip(element, [value, options]);
