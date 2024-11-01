@@ -15,16 +15,21 @@ export default function tooltip(element, properties) {
   }
 
   let [value, options] = properties
-  if (typeof options === "undefined") options = {};
 
-  setTooltip(element, [value, options]);
+  let unsubscribePage
 
-  const unsubscribePage = page.subscribe(() => {
-    const instance =
-      typeof element._tippy === "undefined" ? tippy(element) : element._tippy;
+  if (value) {
+    if (typeof options === "undefined") options = {};
 
-    instance.hide();
-  });
+    setTooltip(element, [value, options]);
+
+    unsubscribePage = page.subscribe(() => {
+      const instance =
+        typeof element._tippy === "undefined" ? tippy(element) : element._tippy;
+
+      instance.hide();
+    });
+  }
 
   return {
     update(updatedValue) {
@@ -33,6 +38,15 @@ export default function tooltip(element, properties) {
       }
 
       let [value, options] = updatedValue
+
+      if (!value) {
+        const instance =
+          typeof element._tippy === "undefined" ? tippy(element) : element._tippy;
+
+        instance.destroy();
+
+        return
+      }
 
       if (typeof options === "undefined") options = {};
 
@@ -44,7 +58,9 @@ export default function tooltip(element, properties) {
         typeof element._tippy === "undefined" ? tippy(element) : element._tippy;
 
       instance.destroy();
-      unsubscribePage();
+      if (unsubscribePage) {
+        unsubscribePage();
+      }
     },
   };
 }
